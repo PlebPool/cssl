@@ -21,14 +21,14 @@ SSL_CTX* initialize_openssl() {
     return ctx;
 }
 
-SSL_CTX* ssl_ctx_init() {
+SSL_CTX* ssl_ctx_init(const char* cert_location, const char* key_location) {
     SSL_CTX* ctx = initialize_openssl();
     if (ctx == NULL) {
         syslog(LOG_ERR, "Failed to initialize OpenSSL");
         return NULL; // TODO: FATAL
     }
-    if (SSL_CTX_use_certificate_file(ctx, "./resources/cert.pem", SSL_FILETYPE_PEM) <= 0 ||
-        SSL_CTX_use_PrivateKey_file(ctx, "./resources/key.pem", SSL_FILETYPE_PEM) <= 0) {
+    if (SSL_CTX_use_certificate_file(ctx, cert_location, SSL_FILETYPE_PEM) <= 0 ||
+        SSL_CTX_use_PrivateKey_file(ctx, key_location, SSL_FILETYPE_PEM) <= 0) {
         ERR_print_errors_fp(stderr);
         exit(EXIT_FAILURE);
     }

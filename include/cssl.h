@@ -6,7 +6,7 @@
 #define CSSL_H
 #include <openssl/types.h>
 
-SSL_CTX* ssl_ctx_init();
+SSL_CTX* ssl_ctx_init(const char* cert_location, const char* key_location);
 void ssl_cleanup(SSL_CTX* ctx);
 
 #endif //CSSL_H
